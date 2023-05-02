@@ -6,7 +6,7 @@ const int BUTTON_HEIGHT = 50;
 
 //
 const int TOTAL_RECT = 52;
-const int TOTAL_PICTURE = 13;
+const int TOTAL_PICTURE = 15;
 enum LButtonSprite
 {
 	BUTTON_SPRITE_MOUSE_OUT = 0,
@@ -30,7 +30,8 @@ enum TheGameStatus {
 	PAUSE_STATUS = 5,
 	EXIT_STATUS = 6,
 	STARTUP_STATUS = 7,
-	TOTAL_STATUS = 8
+	SETTINGS_STATUS = 8,
+	TOTAL_STATUS = 9
 };
 
 enum TheButton {
@@ -48,7 +49,10 @@ enum TheButton {
 	SINGLE_PLAYER = 11,
 	MULTIPLAYER = 12,
 	MAIN_MENU_END_MULTI = 13,
-	TOTAL_BUTTON = 14
+	SETTINGS = 14,
+	THEME_CLASSIC = 15,
+	THEME_BLUE = 16,
+	TOTAL_BUTTON = 17
 };
 
 enum Mode {

@@ -20,6 +20,8 @@ std::string main_menu();
 
 std::string startup();
 
+std::string settings_menu();
+
 void setupSingleGame();
 
 void setupMultiGame();
@@ -45,14 +47,21 @@ void TheGame::updateStatus() {
 			Mix_HaltMusic();
 			this->status = MAIN_MENU_STATUS;
 		}
-		if (this->status == STARTUP_STATUS || this->status == GAME_PLAY_MULTI_STATUS) {
+		if (this->status == STARTUP_STATUS || this->status == GAME_PLAY_MULTI_STATUS || this->status == SETTINGS_STATUS) {
 			this->status = MAIN_MENU_STATUS;
 		}
+		
 		return;
 	}
 	if (this->status_next == "startup") {
 		if (this->status == MAIN_MENU_STATUS) {
 			this->status = STARTUP_STATUS;
+		}
+		return;
+	}
+	if (this->status_next == "settings_menu") {
+		if (this->status == MAIN_MENU_STATUS) {
+			this->status = SETTINGS_STATUS;
 		}
 		return;
 	}
@@ -62,6 +71,7 @@ void TheGame::updateStatus() {
 			mode = SINGLE;
 			this->status = GAME_PLAY_SINGLE_STATUS;
 		}
+		
 		return;
 	}
 
@@ -143,6 +153,11 @@ void TheGame::render() {
 		this->status_next = startup();
 		break;
 	}
+	case SETTINGS_STATUS:
+	{
+		this->status_next = settings_menu();
+		break;
+	}
 	case GAME_PLAY_SINGLE_STATUS:
 	{
 		this->status_next = game_play_single();
@@ -188,10 +203,13 @@ std::string main_menu()
 				Mix_HaltMusic();
 			}
 			SDL_RenderClear(renderer);
-
-			SDL_RenderCopy(renderer, gTexture[12], NULL, &RectPicture[17]);
+			if (settings.theme) {
+				SDL_RenderCopy(renderer, gTexture[13], NULL, &RectPicture[17]);
+			}
+			else SDL_RenderCopy(renderer, gTexture[14], NULL, &RectPicture[17]);
 
 			gButton[START].handleEvent(&e);
+			gButton[SETTINGS].handleEvent(&e);
 			gButton[EXIT].handleEvent(&e);
 			if (settings.sfx) {
 				gButton[SFX_ON].handleEvent(&e);
@@ -214,6 +232,7 @@ std::string main_menu()
 
 
 		gButton[START].render(renderer);
+		gButton[SETTINGS].render(renderer);
 		gButton[EXIT].render(renderer);
 		if (settings.sfx) {
 			gButton[SFX_ON].render(renderer);
@@ -232,18 +251,29 @@ std::string main_menu()
 		if (!isDataEmpty) {
 			gButton[CONTINUE_MENU].render(renderer);
 		}
+		gFont = TTF_OpenFont("2048_Data/font.ttf", 100);
 
-		renderTexture.loadFromRenderedText("Welcome to 2048!", BLUE_COLOR, renderer, gFont);
-		renderTexture.render(300, 50, renderer);
-
+		renderTexture.loadFromRenderedText("2048", YELLOW_COLOR, renderer, gFont);
+		renderTexture.render(320, 50, renderer);
+		//reset lai font
+		gFont = TTF_OpenFont("2048_Data/font.ttf", 32);
 		//Ấn vào start để bắt đầu 
 		if (gButton[START].getStatus() == BUTTON_SPRITE_MOUSE_DOWN) {
 			gButton[START].freeStatus();
 			if (settings.sfx) {
 				Mix_PlayChannel(-1, gSFX, 0);
 			}
-			//Mix_HaltMusic();
+			
 			return "startup";
+		}
+		//an setting ra menu
+		if (gButton[SETTINGS].getStatus() == BUTTON_SPRITE_MOUSE_DOWN) {
+			gButton[SETTINGS].freeStatus();
+			if (settings.sfx) {
+				Mix_PlayChannel(-1, gSFX, 0);
+			}
+			
+			return "settings_menu";
 		}
 
 		//Ấn vào exit để thoát 
@@ -271,7 +301,7 @@ std::string main_menu()
 
 			gButton[SFX_OFF].freeStatus();
 		}
-		//
+		
 		if (gButton[MUSIC_ON].getStatus() == BUTTON_SPRITE_MOUSE_DOWN && settings.music) {
 			settings.music = false;
 
@@ -329,7 +359,7 @@ std::string startup()
 				case SDLK_ESCAPE:
 				{
 					SDL_RenderClear(renderer);
-					SDL_RenderCopy(renderer, gTexture[12], NULL, &RectPicture[17]);
+					SDL_RenderCopy(renderer, gTexture[13], NULL, &RectPicture[17]);
 					SDL_Delay(100);
 
 					if (settings.sfx) {
@@ -353,13 +383,13 @@ std::string startup()
 			gButton[SINGLE_PLAYER].handleEvent(&e);
 			gButton[MULTIPLAYER].handleEvent(&e);
 		}
-
-		SDL_RenderCopy(renderer, gTexture[12], NULL, &RectPicture[17]);
+		 if (settings.theme) SDL_RenderCopy(renderer, gTexture[13], NULL, &RectPicture[17]);
+		 else SDL_RenderCopy(renderer, gTexture[14], NULL, &RectPicture[17]);
 
 		gButton[SINGLE_PLAYER].render(renderer);
 		gButton[MULTIPLAYER].render(renderer);
 
-		renderTexture.loadFromRenderedText("Choose game mode.", BLUE_COLOR, renderer, gFont);
+		renderTexture.loadFromRenderedText("Choose game mode.", YELLOW_COLOR, renderer, gFont);
 		renderTexture.render(25, 50, renderer);
 
 		//Ấn vào continue để chơi tiếp
@@ -387,6 +417,111 @@ std::string startup()
 		SDL_Delay(1000 / FPS);
 	}
 }
+
+std::string settings_menu()
+{
+	SDL_Event e;
+	while (1) {
+
+		while (SDL_PollEvent(&e) != 0) {
+			if (e.type == SDL_QUIT) {
+				return "quit";
+			}
+			if (e.key.repeat == 0 && e.type == SDL_KEYDOWN) {
+
+				switch (e.key.keysym.sym) {
+					case SDLK_ESCAPE:
+					{
+						SDL_RenderClear(renderer);
+						SDL_RenderCopy(renderer, gTexture[13], NULL, &RectPicture[17]);
+						SDL_Delay(100);
+
+						if (settings.sfx) {
+							Mix_PlayChannel(-1, gSFX, 0);
+						}
+						return "menu";
+					}
+
+
+				}
+			}
+			if (Mix_PlayingMusic() == 0 && settings.music) {
+				Mix_PlayMusic(gMusicMenu, -1);
+			}
+
+			if (Mix_PlayingMusic() == 1 && !settings.music) {
+				Mix_HaltMusic();
+			}
+
+			SDL_RenderClear(renderer);
+			if(settings.theme)SDL_RenderCopy(renderer, gTexture[13], NULL, &RectPicture[17]);
+			else SDL_RenderCopy(renderer, gTexture[14], NULL, &RectPicture[17]);
+			
+			
+			if (settings.theme) {
+				gButton[THEME_CLASSIC].handleEvent(&e);
+				gTexture[0] = loadTexture(CLASSIC_BACKGROUND_BOARD, renderer);
+				gTexture[1] = loadTexture(CLASSIC_2, renderer);
+				gTexture[2] = loadTexture(CLASSIC_4, renderer);
+				gTexture[3] = loadTexture(CLASSIC_8, renderer);
+				gTexture[4] = loadTexture(CLASSIC_16, renderer);
+				gTexture[5] = loadTexture(CLASSIC_32, renderer);
+				gTexture[6] = loadTexture(CLASSIC_64, renderer);
+				gTexture[7] = loadTexture(CLASSIC_128, renderer);
+				gTexture[8] = loadTexture(CLASSIC_256, renderer);
+				gTexture[9] = loadTexture(CLASSIC_512, renderer);
+				gTexture[10] = loadTexture(CLASSIC_1024, renderer);
+				gTexture[11] = loadTexture(CLASSIC_2048, renderer);
+				gTexture[12] = loadTexture(CLASSIC_BACKGROUND, renderer);
+			}
+			else {
+				gButton[THEME_BLUE].handleEvent(&e);
+				gTexture[0] = loadTexture(BLUE_BACKGROUND_BOARD, renderer);
+				gTexture[1] = loadTexture(BLUE_2, renderer);
+				gTexture[2] = loadTexture(BLUE_4, renderer);
+				gTexture[3] = loadTexture(BLUE_8, renderer);
+				gTexture[4] = loadTexture(BLUE_16, renderer);
+				gTexture[5] = loadTexture(BLUE_32, renderer);
+				gTexture[6] = loadTexture(BLUE_64, renderer);
+				gTexture[7] = loadTexture(BLUE_128, renderer);
+				gTexture[8] = loadTexture(BLUE_256, renderer);
+				gTexture[9] = loadTexture(BLUE_512, renderer);
+				gTexture[10] = loadTexture(BLUE_1024, renderer);
+				gTexture[11] = loadTexture(BLUE_2048, renderer);
+				gTexture[12] = loadTexture(BLUE_BACKGROUND, renderer);
+			}
+
+			
+		}
+		if (!settings.theme) {
+			gButton[THEME_BLUE].render(renderer);
+		}
+		else {
+			gButton[THEME_CLASSIC].render(renderer);
+		}
+		
+		renderTexture.loadFromRenderedText("Settings:", YELLOW_COLOR, renderer, gFont);
+		renderTexture.render(25, 50, renderer);
+
+		
+		if (gButton[THEME_CLASSIC].getStatus() == BUTTON_SPRITE_MOUSE_DOWN && settings.theme) {
+			settings.theme = false;
+			Mix_PlayChannel(-1, gSFX, 0);
+			gButton[THEME_CLASSIC].freeStatus();
+		}
+
+		if (gButton[THEME_BLUE].getStatus() == BUTTON_SPRITE_MOUSE_DOWN && !settings.theme) {
+			settings.theme = true;
+			Mix_PlayChannel(-1, gSFX, 0);
+			gButton[THEME_BLUE].freeStatus();
+		}
+		//Update screen
+		SDL_RenderPresent(renderer);
+		//Dung SDL
+		SDL_Delay(1000 / FPS);
+	}
+}
+
 
 void setupSingleGame()
 {
@@ -506,13 +641,29 @@ std::string game_play_single()
 
 		//Kết xuất từng ô một 
 		Render_Copy(renderer, gTexture, RectPicture, data, 1, 1);
+		gFont = TTF_OpenFont("2048_Data/font.ttf", 80);
+		if (settings.theme) {
+			renderTexture.loadFromRenderedText("2048", BROWN_COLOR, renderer, gFont);
+			renderTexture.render(250, 5, renderer);
 
+			gFont = TTF_OpenFont("2048_Data/font.ttf", 20);
+			renderTexture.loadFromRenderedText(currentscore, BROWN_COLOR, renderer, gFont);//Nội dung cần vẽ + Màu vẽ. (vẽ chữ)
+			renderTexture.render(470, 5, renderer);//Tọa độ cần vẽ (chữ): x,y;
 
-		renderTexture.loadFromRenderedText(currentscore, BLUE_COLOR, renderer, gFont);//Nội dung cần vẽ + Màu vẽ. (vẽ chữ)
-		renderTexture.render(255, 5, renderer);//Tọa độ cần vẽ (chữ): x,y;
+			renderTexture.loadFromRenderedText(_highscore, BROWN_COLOR, renderer, gFont);
+			renderTexture.render(470, 55, renderer);
+		}
+		else {
+			renderTexture.loadFromRenderedText("2048", BLUE_COLOR, renderer, gFont);
+			renderTexture.render(250, 5, renderer);
 
-		renderTexture.loadFromRenderedText(_highscore, BLUE_COLOR, renderer, gFont);
-		renderTexture.render(255, 55, renderer);
+			gFont = TTF_OpenFont("2048_Data/font.ttf", 20);
+			renderTexture.loadFromRenderedText(currentscore, BLUE_COLOR, renderer, gFont);//Nội dung cần vẽ + Màu vẽ. (vẽ chữ)
+			renderTexture.render(470, 5, renderer);//Tọa độ cần vẽ (chữ): x,y;
+
+			renderTexture.loadFromRenderedText(_highscore, BLUE_COLOR, renderer, gFont);
+			renderTexture.render(470, 55, renderer);
+		}
 		//Cập nhật màn hình 
 		SDL_RenderPresent(renderer);
 
@@ -668,8 +819,11 @@ std::string game_play_multi()
 			}
 		}
 
+		if(settings.theme)
+			SDL_RenderCopy(renderer, gTexture[13], NULL, &RectPicture[17]);
+		else
+			SDL_RenderCopy(renderer, gTexture[14], NULL, &RectPicture[17]);
 
-		SDL_RenderCopy(renderer, gTexture[12], NULL, &RectPicture[17]);
 		//Văn bản chuẩn bị xuất hiện trên nền 
 		std::string currentscore1 = "Player1's score: " + std::to_string(score_player1);
 		std::string currentscore2 = "Player2's score: " + std::to_string(score_player2);
@@ -680,7 +834,7 @@ std::string game_play_multi()
 
 			Render_Copy(renderer, gTexture, RectPicture, data_player1, 2, 1);
 
-			renderTexture.loadFromRenderedText(currentscore1, BLUE_COLOR, renderer, gFont);//Nội dung cần vẽ + Màu vẽ. (vẽ chữ)
+			renderTexture.loadFromRenderedText(currentscore1, WHITE_COLOR, renderer, gFont);//Nội dung cần vẽ + Màu vẽ. (vẽ chữ)
 
 			renderTexture.render(5, 5, renderer);//Tọa độ cần vẽ (chữ): x,y;
 		}
@@ -690,7 +844,7 @@ std::string game_play_multi()
 
 			Render_Copy(renderer, gTexture, RectPicture, data_player2, 2, 2);
 
-			renderTexture.loadFromRenderedText(currentscore2, CYAN_COLOR, renderer, gFont);
+			renderTexture.loadFromRenderedText(currentscore2, GREEN_COLOR, renderer, gFont);
 
 			renderTexture.render(505, 5, renderer);
 		}
@@ -698,28 +852,31 @@ std::string game_play_multi()
 		if (check_lose(data_player1) || check_win(data_player1)) {
 			player1_complete = true;
 			std::string lose1 = "You've done!";
-			renderTexture.loadFromRenderedText(lose1, BLUE_COLOR, renderer, gFont);
+			renderTexture.loadFromRenderedText(lose1, WHITE_COLOR, renderer, gFont);
 			renderTexture.render(50, 175, renderer);
 
-			renderTexture.loadFromRenderedText(currentscore1, BLUE_COLOR, renderer, gFont);
+			renderTexture.loadFromRenderedText(currentscore1, WHITE_COLOR, renderer, gFont);
 			renderTexture.render(50, 250, renderer);
 		}
 
 		if (check_lose(data_player2) || check_win(data_player2)) {
 			player2_complete = true;
 			std::string lose2 = "You've done!";
-			renderTexture.loadFromRenderedText(lose2, CYAN_COLOR, renderer, gFont);
+			renderTexture.loadFromRenderedText(lose2, GREEN_COLOR, renderer, gFont);
 			renderTexture.render(500, 175, renderer);
 
-			renderTexture.loadFromRenderedText(currentscore2, CYAN_COLOR, renderer, gFont);
+			renderTexture.loadFromRenderedText(currentscore2, GREEN_COLOR, renderer, gFont);
 			renderTexture.render(500, 250, renderer);
 		}
 		//Cập nhật màn hình 
 
 		if (player1_complete && player2_complete) {
-			SDL_RenderCopy(renderer, gTexture[12], NULL, &RectPicture[17]);
+			if(settings.theme)
+				SDL_RenderCopy(renderer, gTexture[13], NULL, &RectPicture[17]);
+			else 
+				SDL_RenderCopy(renderer, gTexture[14], NULL, &RectPicture[17]);
 			if (score_player1 > score_player2) {
-				renderTexture.loadFromRenderedText("Player 1 win with score: " + std::to_string(score_player1), BLUE_COLOR, renderer, gFont);
+				renderTexture.loadFromRenderedText("Player 1 win with score: " + std::to_string(score_player1), WHITE_COLOR, renderer, gFont);
 				renderTexture.render(175, 100, renderer);
 			}
 			else if (score_player1 < score_player2) {
@@ -763,7 +920,7 @@ std::string pause()
 				case SDLK_ESCAPE:
 				{
 					SDL_RenderClear(renderer);
-					SDL_RenderCopy(renderer, gTexture[12], NULL, &RectPicture[17]);
+					SDL_RenderCopy(renderer, gTexture[13], NULL, &RectPicture[17]);
 					SDL_Delay(100);
 
 					if (settings.sfx) {
@@ -806,8 +963,8 @@ std::string pause()
 				gButton[MUSIC_OFF].handleEvent(&e);
 			}
 		}
-
-		SDL_RenderCopy(renderer, gTexture[12], NULL, &RectPicture[17]);
+		if(settings.theme) SDL_RenderCopy(renderer, gTexture[13], NULL, &RectPicture[17]);
+		else SDL_RenderCopy(renderer, gTexture[14], NULL, &RectPicture[17]);
 
 		gButton[CONTINUE_GAMEPLAY].render(renderer);
 		gButton[SAVE_AND_EXIT].render(renderer);
@@ -826,7 +983,7 @@ std::string pause()
 			gButton[MUSIC_OFF].render(renderer);
 		}
 
-		renderTexture.loadFromRenderedText("Game Paused!", BLUE_COLOR, renderer, gFont);
+		renderTexture.loadFromRenderedText("PAUSED", YELLOW_COLOR, renderer, gFont);
 		renderTexture.render(25, 50, renderer);
 
 		//
@@ -964,8 +1121,10 @@ std::string lose()
 			}
 
 			SDL_RenderClear(renderer);
-
-			SDL_RenderCopy(renderer, gTexture[12], NULL, &RectPicture[17]);
+			if(settings.theme)
+				SDL_RenderCopy(renderer, gTexture[13], NULL, &RectPicture[17]);
+			else
+				SDL_RenderCopy(renderer, gTexture[14], NULL, &RectPicture[17]);
 
 			gButton[PLAY_AGAIN].handleEvent(&e);
 
@@ -979,8 +1138,11 @@ std::string lose()
 		gButton[EXIT].render(renderer);
 		gButton[MAIN_MENU].render(renderer);
 
-		renderTexture.loadFromRenderedText("You Lose!", BLUE_COLOR, renderer, gFont);
+		gFont = TTF_OpenFont("2048_Data/font.ttf", 70);
+		renderTexture.loadFromRenderedText("You Lose!", YELLOW_COLOR, renderer, gFont);
 		renderTexture.render(25, 50, renderer);
+		//reset font ve kich thuoc ban dau
+		loadFont(gFont);
 
 		//Ấn vào "Play Again" để chơi lại 
 		if (gButton[PLAY_AGAIN].getStatus() == BUTTON_SPRITE_MOUSE_DOWN) {

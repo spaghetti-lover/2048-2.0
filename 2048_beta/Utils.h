@@ -16,19 +16,23 @@ void setup() {
 	loadMusic(gMusicGamePlay, "2048_Data/gameplay.wav");
 
 	setupButton(gButton[START], "Start", 50, 150, renderer, gFont);
-	setupButton(gButton[EXIT], "Exit", 50, 210, renderer, gFont);
+	setupButton(gButton[SETTINGS], "Settings", 50, 210, renderer, gFont);
+	setupButton(gButton[EXIT], "Exit", 50, 270, renderer, gFont);
 	setupButton(gButton[PLAY_AGAIN], "Play Again", 50, 150, renderer, gFont);
-	setupButton(gButton[CONTINUE_MENU], "Continue", 50, 390, renderer, gFont);
+	setupButton(gButton[CONTINUE_MENU], "Continue", 50, 410, renderer, gFont);
 	setupButton(gButton[CONTINUE_GAMEPLAY], "Continue", 50, 150, renderer, gFont);
 	setupButton(gButton[SAVE_AND_EXIT], "Save and exit", 50, 210, renderer, gFont);
-	setupButton(gButton[SFX_ON], "SFX: On", 50, 270, renderer, gFont);
-	setupButton(gButton[SFX_OFF], "SFX: Off", 50, 270, renderer, gFont);
-	setupButton(gButton[MUSIC_ON], "Music: On", 50, 330, renderer, gFont);
-	setupButton(gButton[MUSIC_OFF], "Music: Off", 50, 330, renderer, gFont);
-	setupButton(gButton[MAIN_MENU], "Main Menu", 50, 270, renderer, gFont);
+	setupButton(gButton[SFX_ON], "SFX: On", 50, 330, renderer, gFont);
+	setupButton(gButton[SFX_OFF], "SFX: Off", 50, 330, renderer, gFont);
+	setupButton(gButton[MUSIC_ON], "Music: On", 50, 390, renderer, gFont);
+	setupButton(gButton[MUSIC_OFF], "Music: Off", 50, 390, renderer, gFont);
+	setupButton(gButton[MAIN_MENU], "Main Menu", 50, 390, renderer, gFont);
 	setupButton(gButton[SINGLE_PLAYER], "Single Player", 50, 150, renderer, gFont);
 	setupButton(gButton[MULTIPLAYER], "Multiplayer", 50, 250, renderer, gFont);
 	setupButton(gButton[MAIN_MENU_END_MULTI], "Main Menu", 350, 225, renderer, gFont);
+	setupButton(gButton[THEME_CLASSIC], "Theme: Classic", 25, 210, renderer, gFont);
+	setupButton(gButton[THEME_BLUE], "Theme: Blue", 25, 210, renderer, gFont);
+
 
 	setPositionOfPicture(RectPicture);
 

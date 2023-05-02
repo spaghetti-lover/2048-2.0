@@ -11,6 +11,10 @@
 #include"LButton.h"
 #include"LButtonSprite.h"
 #include"CommonFunc.h"
+#include"settings.h"
+
+
+
 
 void init(SDL_Window*& window, SDL_Renderer*& renderer) {
 	//Create window
@@ -57,28 +61,31 @@ void loadFont(TTF_Font*& gFont) {
 	}
 }
 
-void setupButton(LButton& button, const std::string& title, const int& x, const int& y, SDL_Renderer*& renderer, TTF_Font*& gFont) {
-	button.setTexture(title, DEFAULT_STATUS, GREEN_COLOR, renderer, gFont);
-	button.setTexture(title, TRIGGERED_STATUS, RED_COLOR, renderer, gFont);
 
+void setupButton(LButton& button, const std::string& title, const int& x, const int& y, SDL_Renderer*& renderer, TTF_Font*& gFont) {
+	button.setTexture(title, DEFAULT_STATUS, YELLOW_COLOR, renderer, gFont);
+	button.setTexture(title, TRIGGERED_STATUS, WHITE_COLOR, renderer, gFont);
 	button.setPosition(x, y);
+
 }
 
 void loadPicture(SDL_Texture** gTexture, SDL_Renderer*& renderer) {
 	//load RectPicture for use
-	gTexture[0] = loadTexture("2048_Data/background.png", renderer);
-	gTexture[1] = loadTexture("2048_Data/2.png", renderer);
-	gTexture[2] = loadTexture("2048_Data/4.png", renderer);
-	gTexture[3] = loadTexture("2048_Data/8.png", renderer);
-	gTexture[4] = loadTexture("2048_Data/16.png", renderer);
-	gTexture[5] = loadTexture("2048_Data/32.png", renderer);
-	gTexture[6] = loadTexture("2048_Data/64.png", renderer);
-	gTexture[7] = loadTexture("2048_Data/128.png", renderer);
-	gTexture[8] = loadTexture("2048_Data/256.png", renderer);
-	gTexture[9] = loadTexture("2048_Data/512.png", renderer);
-	gTexture[10] = loadTexture("2048_Data/1024.png", renderer);
-	gTexture[11] = loadTexture("2048_Data/2048.png", renderer);
-	gTexture[12] = loadTexture("2048_Data/background menu.jpg", renderer);
+	gTexture[0] = loadTexture(CLASSIC_BACKGROUND_BOARD, renderer);
+	gTexture[1] = loadTexture(CLASSIC_2, renderer);
+	gTexture[2] = loadTexture(CLASSIC_4, renderer);
+	gTexture[3] = loadTexture(CLASSIC_8, renderer);
+	gTexture[4] = loadTexture(CLASSIC_16, renderer);
+	gTexture[5] = loadTexture(CLASSIC_32, renderer);
+	gTexture[6] = loadTexture(CLASSIC_64, renderer);
+	gTexture[7] = loadTexture(CLASSIC_128, renderer);
+	gTexture[8] = loadTexture(CLASSIC_256, renderer);
+	gTexture[9] = loadTexture(CLASSIC_512, renderer);
+	gTexture[10] = loadTexture(CLASSIC_1024, renderer);
+	gTexture[11] = loadTexture(CLASSIC_2048, renderer);
+	gTexture[12] = loadTexture(CLASSIC_BACKGROUND, renderer);
+	gTexture[13] = loadTexture(BROWN_BACKGROUND_MENU, renderer);
+	gTexture[14] = loadTexture(BLUE_BACKGROUND_MENU, renderer);
 	for (int i = 0; i < TOTAL_PICTURE; i++) {
 		if (gTexture[i] == NULL) {
 			std::cout << "Unable to load image!" << SDL_GetError() << std::endl;
