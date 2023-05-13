@@ -1,2 +1,6 @@
-﻿  main.cpp
+﻿  CommonFunc.cpp
+  gameEngine.cpp
+D:\Project\2048_beta\2048_beta\gameEngine.cpp(61,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  main.cpp
+  Generating Code...
   2048_beta.vcxproj -> D:\Project\2048_beta\x64\Debug\2048_beta.exe

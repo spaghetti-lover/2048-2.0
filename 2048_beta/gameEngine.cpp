@@ -2,26 +2,26 @@
 #include<ctime>
 #include"gameEngine.h"
 #include"position.h"
-
-const int SOHANG = 4;
-const int SOCOT = 4;
-
+//So hang + so cot
+const int ROWS = 4;
+const int COLS = 4;
+//Tao ma tran voi gia tri ban dau = 0
 int** createData() {
-	int** data = new int* [SOHANG];
-	for (int i = 0; i < SOCOT; i++) {
-		data[i] = new int[SOCOT];
+	int** data = new int* [ROWS];
+	for (int i = 0; i < COLS; i++) {
+		data[i] = new int[ROWS];
 	}
-	for (int i = 0; i < SOHANG; i++) {
-		for (int j = 0; j < SOCOT; j++) {
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLS; j++) {
 			data[i][j] = 0;
 		}
 	}
 	return data;
 }
-
+//Tao ban sao ma tran
 void getEqualArray(int** data_nguon, int** data_cpy) {
-	for (int i = 0; i < SOHANG; i++) {
-		for (int j = 0; j < SOCOT; j++) {
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLS; j++) {
 			data_cpy[i][j] = data_nguon[i][j];
 		}
 	}
@@ -47,22 +47,22 @@ void updateData(int** data, char key, int& diem) {
 	}
 	}
 }
-
+//check xem co di chuyen duoc khong
 bool isPossibleMove(int** data1, int** data2) {
-	for (int i = 0; i < SOHANG; i++) {
-		for (int j = 0; j < SOCOT; j++) {
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLS; j++) {
 			if (data1[i][j] != data2[i][j])return true;
 		}
 	}
 	return false;
 }
-
+//Sinh 1 o ngau nhien
 void randomUpgrade(int** data) {
 	srand(time(nullptr));
 	std::vector<Position>vct;
 	Position pos;
-	for (int i = 0; i < SOHANG; i++) {
-		for (int j = 0; j < SOCOT; j++) {
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLS; j++) {
 			if (data[i][j] == 0) {
 				pos.x = i;
 				pos.y = j;
@@ -81,28 +81,28 @@ void randomUpgrade(int** data) {
 
 bool check_lose(int** data) {
 	int n = 0;
-	for (int i = 0; i < SOHANG; i++) {
-		for (int j = 0; j < SOCOT; j++) {
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLS; j++) {
 			if (data[i][j] == 0)return false;
 		}
 	}
-	for (int i = 0; i < SOHANG; i++) {
-		for (int j = 0; j < SOCOT - 1; j++) {
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLS - 1; j++) {
 			if (data[i][j] != data[i][j + 1])n++;
 		}
 	}
-	for (int i = 0; i < SOCOT; i++) {
-		for (int j = 0; j < SOHANG - 1; j++) {
+	for (int i = 0; i < COLS; i++) {
+		for (int j = 0; j < ROWS - 1; j++) {
 			if (data[j][i] != data[j + 1][i])n++;
 		}
 	}
-	if (n == (SOHANG * (SOCOT - 1) * 2))return true;
+	if (n == (ROWS * (COLS - 1) * 2))return true;
 	return false;
 }
 
 bool check_win(int** data) {
-	for (int i = 0; i < SOHANG; i++) {
-		for (int j = 0; j < SOCOT; j++) {
+	for (int i = 0; i < ROWS; i++) {
+		for (int j = 0; j < COLS; j++) {
 			if (data[i][j] == 2048)return true;
 		}
 	}
@@ -110,7 +110,7 @@ bool check_win(int** data) {
 }
 
 void charW(int** data, int& diem) {
-	for (int i = 0; i < SOCOT; i++) {
+	for (int i = 0; i < COLS; i++) {
 		if (data[0][i] == data[1][i] && data[0][i] != 0) {
 			data[0][i] *= 2;		//2 2 x y
 			diem += data[0][i];
@@ -284,7 +284,7 @@ void charW(int** data, int& diem) {
 }
 
 void charS(int** data, int& diem) {
-	for (int i = 0; i < SOCOT; i++) {
+	for (int i = 0; i < COLS; i++) {
 		if (data[2][i] == data[3][i] && data[2][i] != 0) {
 			data[3][i] *= 2;		//x y 2 2
 			diem += data[3][i];
@@ -460,7 +460,7 @@ void charS(int** data, int& diem) {
 }
 
 void charA(int** data, int& diem) {
-	for (int i = 0; i < SOCOT; i++) {
+	for (int i = 0; i < COLS; i++) {
 		if (data[i][0] == data[i][1] && data[i][0] != 0) {
 			data[i][0] *= 2;		//2 2 x y
 			diem += data[i][0];
@@ -635,7 +635,7 @@ void charA(int** data, int& diem) {
 }
 
 void charD(int** data, int& diem) {
-	for (int i = 0; i < SOCOT; i++) {
+	for (int i = 0; i < COLS; i++) {
 		if (data[i][2] == data[i][3] && data[i][2] != 0) {
 			data[i][3] *= 2;		//x y 2 2
 			diem += data[i][3];
@@ -811,7 +811,7 @@ void charD(int** data, int& diem) {
 }
 
 void deleteData(int** data) {
-	for (int i = 0; i < SOHANG; i++) {
+	for (int i = 0; i < ROWS; i++) {
 		delete[]data[i];
 	}
 	delete[]data;

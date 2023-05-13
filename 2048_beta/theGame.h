@@ -630,7 +630,8 @@ std::string game_play_single()
 		}
 
 
-		SDL_RenderCopy(renderer, gTexture[12], NULL, &RectPicture[17]);
+		if (settings.theme)SDL_RenderCopy(renderer, gTexture[13], NULL, &RectPicture[17]);
+		else SDL_RenderCopy(renderer, gTexture[14], NULL, &RectPicture[17]);
 		//Văn bản chuẩn bị xuất hiện trên nền 
 		std::string currentscore = "Your score: " + std::to_string(score);
 		std::string _highscore = "High score: " + std::to_string(highscore);
@@ -654,21 +655,22 @@ std::string game_play_single()
 			renderTexture.render(470, 55, renderer);
 		}
 		else {
-			renderTexture.loadFromRenderedText("2048", BLUE_COLOR, renderer, gFont);
+			renderTexture.loadFromRenderedText("2048", YELLOW_COLOR, renderer, gFont);
 			renderTexture.render(250, 5, renderer);
 
 			gFont = TTF_OpenFont("2048_Data/font.ttf", 20);
-			renderTexture.loadFromRenderedText(currentscore, BLUE_COLOR, renderer, gFont);//Nội dung cần vẽ + Màu vẽ. (vẽ chữ)
+			renderTexture.loadFromRenderedText(currentscore, YELLOW_COLOR, renderer, gFont);//Nội dung cần vẽ + Màu vẽ. (vẽ chữ)
 			renderTexture.render(470, 5, renderer);//Tọa độ cần vẽ (chữ): x,y;
 
-			renderTexture.loadFromRenderedText(_highscore, BLUE_COLOR, renderer, gFont);
+			renderTexture.loadFromRenderedText(_highscore, YELLOW_COLOR, renderer, gFont);
 			renderTexture.render(470, 55, renderer);
 		}
 		//Cập nhật màn hình 
 		SDL_RenderPresent(renderer);
 
 		//Dừng SDL 
-		SDL_Delay(1000 / FPS);
+		//SDL_Delay(1000 / FPS);
+		SDL_Delay(1000/FPS);
 
 		if (check_win(data)) {
 			SDL_Delay(750);
@@ -944,10 +946,7 @@ std::string pause()
 
 			gButton[CONTINUE_GAMEPLAY].handleEvent(&e);
 
-			if (mode == SINGLE)
-			{
-				gButton[SAVE_AND_EXIT].handleEvent(&e);
-			}
+			gButton[SAVE_AND_EXIT].handleEvent(&e);
 
 			if (settings.sfx) {
 				gButton[SFX_ON].handleEvent(&e);

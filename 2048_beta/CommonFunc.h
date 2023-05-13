@@ -64,18 +64,25 @@ const int FPS = 60;
 //Khoi chay cau hinh do hoa
 void init(SDL_Window*& window, SDL_Renderer*& renderer);
 
+//Ham load texture
 SDL_Texture* loadTexture(const std::string& path, SDL_Renderer*& renderer);
 
+//Ham load font voi kich thuoc default la 32
 void loadFont(TTF_Font*& gFont);
 
+//Ham load anh
 void loadPicture(SDL_Texture** gTexture, SDL_Renderer*& renderer);
 
+//Ham dat anh tren window
 void setPositionOfPicture(SDL_Rect* picure);
 
+//Ham hien thi anh
 void Render_Copy(SDL_Renderer*& renderer, SDL_Texture** Texture, SDL_Rect* RectPicture, int** matran, const int& mode, const int& player);
 
+// Ham xoa texture
 void freeTexture(LTexture& renderTexture);
 
+//Ham xoa renderer + window
 void freeWindowAndRenderer(SDL_Window*& window, SDL_Renderer*& renderer);
 
 //Load ma tran

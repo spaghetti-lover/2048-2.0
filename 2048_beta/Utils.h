@@ -5,7 +5,7 @@ void setup() {
 	init(window, renderer);
 
 	SDL_SetWindowIcon(window, icon);
-
+	
 	loadFont(gFont);
 
 	loadPicture(gTexture, renderer);
@@ -19,7 +19,7 @@ void setup() {
 	setupButton(gButton[SETTINGS], "Settings", 50, 210, renderer, gFont);
 	setupButton(gButton[EXIT], "Exit", 50, 270, renderer, gFont);
 	setupButton(gButton[PLAY_AGAIN], "Play Again", 50, 150, renderer, gFont);
-	setupButton(gButton[CONTINUE_MENU], "Continue", 50, 410, renderer, gFont);
+	setupButton(gButton[CONTINUE_MENU], "Continue", 50, 450, renderer, gFont);
 	setupButton(gButton[CONTINUE_GAMEPLAY], "Continue", 50, 150, renderer, gFont);
 	setupButton(gButton[SAVE_AND_EXIT], "Save and exit", 50, 210, renderer, gFont);
 	setupButton(gButton[SFX_ON], "SFX: On", 50, 330, renderer, gFont);
