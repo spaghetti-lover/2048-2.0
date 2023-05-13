@@ -15,10 +15,10 @@
 - Ý tưởng xây dựng **2048 2.0** bắt nguồn từ tựa game **2048** từng được rất nhiều thế hệ 9x yêu thích nhưng có sự cải tiến khi mình đã bổ sung thêm chế độ 2 người chơi và thay đổi tông màu sang xanh nhằm nâng cao trải nghiệm chơi giải trí với bạn bè.
 
 - Với chế độ 1 người chơi:
-  + Điều khiển các ô số 2,4 được phát sinh ngẫu nhiên bằng phím A, W, S, D để ghép các ô giống nhau lại thành số to hơn.
+  + Điều khiển các ô số 2, 4 được phát sinh ngẫu nhiên bằng phím A, W, S, D để ghép các ô giống nhau lại thành số to hơn.
   + Xếp đến khi đạt đến ô 2048 là chiến thắng.
   + Nếu không còn khoảng trống để xếp ô thì thua.
-- Với chế độ 2 người chơi: luật giống chế độ 1 người và người thứ 2 sẽ di chuyễn bằng nút ⬅️⬆️⬇️➡️ (ai nhiều điểm hơn sẽ thắng người còn lại) 
+- Với chế độ 2 người chơi: Luật giống chế độ 1 người và người thứ 2 sẽ di chuyễn bằng nút ⬅️⬆️⬇️➡️ (ai nhiều điểm hơn sẽ thắng người còn lại) 
 
 - Xếp thành 1 ô bất kỳ thì điểm tính bằng số của ô đó. Ví dụ:
 
