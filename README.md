@@ -29,9 +29,9 @@
 
 ### *Preview*
 
-![](textures/preview/menu.png)
-![](textures/preview/ingame.png)
-![](textures/preview/endgame.png)
+![](2048_beta/2048_Data/readme_image/start_menu.png)
+![](2048_beta/2048_Data/readme_image/game_play.png)
+![](2048_beta/2048_Data/readme_image/game_over.png)
 
 ## **Hướng dẫn cài đặt game**
 
