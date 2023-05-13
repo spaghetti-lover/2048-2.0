@@ -35,34 +35,7 @@
 
 ## **Hướng dẫn cài đặt game**
 
-### ***Đối tượng 1*** : **Chỉ có nhu cầu chơi game**
-
-- Tải file rar theo đường link sau: https://drive.google.com/drive/folders/1QWWvFZcg2JDLI2CwGDsXPVNKGdPzs36d?usp=sharing
-
-- Giải nén file vừa tải, mở folder *HungryFishGame*, chạy file *Hungry Fish.exe* để bắt đầu chơi.
-
-### ***Đối tượng 2*** : **Có nhu cầu tham khảo, sử dụng source code để phát triển thêm**
-
-- Yêu cầu:
-
-    1. Cài đặt CodeBlocks.
-
-    2. Tải các thư viện hỗ trợ SDL: SDL2, SDL2_mixer, SDL2_image, SDL2_ttf.
-
-    3. Hướng dẫn cài đặt thư viện SDL2 vào CodeBlocks: https://youtu.be/dC77R3MYjcU?list=PL-IbDGFpCvtluDVQSSslFYzFueSbjDvZO , làm tương tự đối với các thư viện còn lại.
-    
-- Cài đặt:
-
-    1. Tải project về máy dưới dạng file ZIP hoặc dùng câu lệnh sau:
-    ```
-        git clone https://github.com/vanhsusu03/Hungry-Fish.git
-    ```
-    
-    2. Add headers: Mở project bằng CodeBlocks, vào *Settings* -> *Complier* -> *Search directories* -> *Complier* -> *Add* -> lấy đường dẫn file *headers* trong folder project -> *OK* -> *OK*.
-
-- Chạy chương trình: Click vào icon *Build and run* để chạy game.
-
-- *Nếu gặp khó khăn trong quá trình cài đặt hay chơi game, hãy liên lạc qua email dnvietanhvnuuet@gmail.com.*
+- *Nếu gặp khó khăn trong quá trình cài đặt hay chơi game, hãy liên lạc qua email phungducanh2511@gmail.com.*
 
 ### *Các kỹ thuật sử dụng trong game*
 
@@ -74,21 +47,20 @@
 
 - Tạo, sử dụng và quản lí class nhiều đối tượng: cá, điểm ,hình ảnh, âm thanh,...
 
-- Xử lí hình ảnh, thời gian, sự kiện SDL, bật/tắt âm thanh, di chuyển đối tượng, xử lí va chạm, tính toán tọa độ,....
+- Xử lí hình ảnh, thời gian, sự kiện SDL, bật/tắt âm thanh, tạo ma trận, xử lí ma trận, tính toán tọa độ,....
 
 ### *Các nguồn tham khảo*
 
-- Cách sử dụng, cài đặt SDL2, quản lí chương trình, tách file: https://www.youtube.com/channel/UC5BjUr9a3lHAe4a8Y8uuqLw , https://github.com/trongminh03 
-
-- Hình ảnh:  https://www.flaticon.com/ - tất cả animations đều tự design.
-
-- Âm thanh: Google, Feeding Frenzy 1, Feeding Frenzy 2.
+- Cách sử dụng, cài đặt SDL2: https://lazyfoo.net/tutorials/SDL/index.php
+- Cách triển khai ý tưởng: https://www.youtube.com/watch?v=tGWhk47ZIm4
+- Hình ảnh: Tự tạo bằng canva và photoshop.
+- Âm thanh: freesound.org.
 
 ## **Tổng kết**
 
 ### *Điều tâm đắc*
 
-- Toàn bộ project là do bản thân em tự làm, không sao chép, tìm kiếm hay tham khảo từ bất kì nguồn nào.
+- Em đã dành rất nhiều thời gian cho project này với mục tiêu hướng tới sự chỉnh chu hết sức có thể. Em tin rằng đây là game có ý tưởng khá mới so với các game 2048 trước và nhìn chung là khá hoàn chỉnh.
 
 - Cải thiện nhiều kĩ năng lập trình, sử dụng và quản lí file, chương trình.
 
@@ -96,17 +68,13 @@
 
 ### *Điểm hạn chế*
 
-- Quản lí đối tượng chưa thật sự tối ưu.
+- Xử lý ma trận còn hạn chế
+- Dùng mô hình hướng đối tượng chưa thực sự tốt
 
 ### *Hướng phát triển tiếp theo*
 
-- Phát triển thêm simple AI cho các loại cá trong game, biết né tránh đối tượng lớn hơn, đuổi theo đối tượng nhỏ hơn.
-
-- Phát triển nhiều chế độ chơi từ dễ đến khó, tăng dần tốc độ, thêm threats,...
-
+- Phát triển con bot có khả năng chơi game với người.
+- Tạo chế độ chơi với cửa sổ full màn hình.
+- Tăng kích thước bản chơi lên 16x16, 32x32,...
 - Cập nhật bảng xếp hạng high scores, lấy top điểm cao.
-
-- Cải thiện chất lượng hình ảnh trong game.
-
-
-### *Mức điểm tự đánh giá* : 9 - 9,5 / 10 ###
+- Cải thiện chất lượng animation trong game.
