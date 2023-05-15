@@ -75,6 +75,6 @@
 
 - Phát triển con bot có khả năng chơi game với người.
 - Tạo chế độ chơi với cửa sổ full màn hình.
-- Tăng kích thước bản chơi lên 16x16, 32x32,...
+- Tăng kích thước bảng chơi lên 16x16, 32x32,...
 - Cập nhật bảng xếp hạng high scores, lấy top điểm cao.
 - Cải thiện chất lượng animation trong game.
